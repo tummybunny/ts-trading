@@ -467,9 +467,11 @@ const API = {
           const omps = subs.get(ins) || new Set();
           omps.add(omp);
           subs.set(ins, omps);
+          console.log(`Subscribed ${ins.ticker}. Total subscribers: ${omps.size}`);
 
           return () => {
             omps.delete(omp);
+            console.log(`Unsubscribed ${ins.ticker}. Total subscribers: ${omps.size}`);
           };
         },
       });

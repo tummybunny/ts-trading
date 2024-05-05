@@ -43,8 +43,6 @@ const DwPrices = (props: { price: MarketPrice | null }) => {
       default:
         break;
     }
-
-    return () => { console.log(`Unmounted: ${props.price?.ticker} ${props.price?.timestamp}`) }
   }, [props]);
 
   return (

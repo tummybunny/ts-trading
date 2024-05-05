@@ -16,14 +16,14 @@ const DealWindow = (props: PropsWithChildren<DealWindowProp>) => {
         if (md != null) {
             console.log({i: props.instrument, md});
             // subscribe a price stream returns unsub function ...
-            console.warn(`Subscribing ${props.instrument.ticker}`);
+            console.log(`Subscribing for ${props.instrument.ticker}`);
             const unsub = md.subscribe(props.instrument, mp => {
                 setPrice(mp)
             });
 
             // clean up during unmount:
             return () => { 
-                console.warn(`Unsubscribe from ${props.instrument.ticker}`);
+                console.log(`Unsubscribing from ${props.instrument.ticker}`);
                 unsub();
             };
         }
