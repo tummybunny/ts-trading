@@ -6,28 +6,34 @@ const DwMktDepth = (props: { price: MarketPrice | null }) => {
   const depth = props.price?.depth;
   const toBidAsk = (d: MarketDepth, idx: number) => (
     <div className={`row-${d.side}`} key={`r_${d.side}_${idx}`}>
-      <div className={`price-${d.side}`}  key={`p_${d.side}_${idx}`}>{d.price}</div>
-      <div className={`qty-${d.side}`}  key={`q_${d.side}_${idx}`}>{d.size}</div>
+      <div className={`price-${d.side}`} key={`p_${d.side}_${idx}`}>
+        {d.price}
+      </div>
+      <div className={`qty-${d.side}`} key={`q_${d.side}_${idx}`}>
+        {d.size}
+      </div>
     </div>
   );
 
-  const bids = (depth &&
+  const bids =
+    depth &&
     depth
       .filter((d) => d.side === "bid")
       .sort((a, b) => b.price - a.price)
-      .map(toBidAsk));
-  const asks = (depth &&
+      .map(toBidAsk);
+  const asks =
+    depth &&
     depth
       .filter((d) => d.side === "ask")
       .sort((a, b) => a.price - b.price)
-      .map(toBidAsk));
+      .map(toBidAsk);
 
   const toggleOpen = () => setIsOpen((o) => !o);
 
   const chevron = isOpen ? (
-    <i className="gg-chevron-down-r button" onClick={toggleOpen}/>
+    <i className="gg-chevron-up-r button" onClick={toggleOpen} />
   ) : (
-    <i className="gg-chevron-up-r button" onClick={toggleOpen}/>
+    <i className="gg-chevron-down-r button" onClick={toggleOpen} />
   );
   const mdepth = (
     <div className={`depth-window ${isOpen ? "" : "invisible"}`}>
@@ -48,7 +54,12 @@ const DwMktDepth = (props: { price: MarketPrice | null }) => {
     </div>
   );
 
-  return <div>{chevron}{mdepth}</div>;
+  return (
+    <div>
+      {chevron}
+      {mdepth}
+    </div>
+  );
 };
 
 export default DwMktDepth;
