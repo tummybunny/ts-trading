@@ -3,18 +3,25 @@
   --text-color: rgb(125, 207, 255);
   --background-color: rgb(35, 35, 36);
   --meta-color: rgb(255, 255, 255);
-  --meta-bgcolor: rgb(20, 37, 73);
-  --window-color: rgb(64, 79, 119);
+  --meta-bgcolor: rgb(141, 141, 141);
+  --window-color: rgb(11, 4, 115);
+  --window-color1: rgb(21, 24, 115);
+  --window-color2: rgb(98, 95, 182);
   --bid-ask-color: rgb(179, 227, 255);
   --bid-ask-bgcolor: rgb(37, 124, 255);
+  --blink-bid-ask-color: rgb(255, 255, 255);
+  --blink-bid-bgcolor: rgb(0, 209, 14);
+  --blink-ask-bgcolor: rgb(207, 0, 35);
+  --depth-bgcolor: rgb(0, 2, 32);
   --depth-bid-bgcolor: rgb(10, 70, 10);
   --depth-bid-color: rgb(50, 255, 50);
   --depth-ask-bgcolor: rgb(70, 10, 10);
-  --depth-ask-color: rgb(255, 50, 50);
+  --depth-ask-color: rgb(255, 97, 97);
   --w3d-top-color: rgb(82, 115, 177);
   --w3d-left-color: rgb(82, 104, 177);
   --w3d-right-color: rgb(40, 59, 88);
   --w3d-bottom-color: rgb(40, 59, 88);
+  --w3d-shadow: rgb(0, 0, 0);
   --button-color: white;
   --button-bgcolor: rgb(75, 119, 160);
   --button-hover-color: white;
@@ -59,10 +66,37 @@ body {
   margin: 2px;
 }
 
+.menu {
+  display: flex;
+  font-size: 1rem;
+  background: var(--window-color);
+  background: radial-gradient(
+    circle,
+    var(--window-color2) 0%,
+    var(--window-color1) 91%
+  );
+  text-shadow: 2px 2px 5px var(--w3d-shadow);
+  justify-content: right;
+  align-items: center;
+
+  .menu-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    margin: 3px;
+  }
+}
+
+
 .window {
   display: block;
   width: 17rem;
-  background-color: var(--window-color);
+  background: var(--window-color);
+  background: radial-gradient(
+    circle,
+    var(--window-color1) 0%,
+    var(--window-color2) 91%
+  );
 }
 
 .window-metadata {
@@ -73,6 +107,7 @@ body {
   color: var(--meta-color);
   background-color: var(--meta-bgcolor);
   outline: 1px solid var(--background-color);
+  text-shadow: 2px 2px 5px var(--w3d-shadow);
 }
 
 .deal-window-prices {
@@ -86,6 +121,7 @@ body {
     top: 0px;
     padding: 2px;
     background-color: var(--bid-ask-bgcolor);
+    text-shadow: 1px 1px 3px var(--w3d-shadow);
   }
   .bid {
     height: 50px;
@@ -123,10 +159,12 @@ body {
     border-color: var(--background-color);
   }
   .bid-blink {
-    background-color: rgb(169, 255, 39);
+    color: var(--blink-bid-ask-color);
+    background-color: var(--blink-bid-bgcolor);
   }
   .ask-blink {
-    background-color: rgb(255, 34, 34);
+    color: var(--blink-bid-ask-color);
+    background-color: var(--blink-ask-bgcolor);
   }
 }
 
@@ -137,6 +175,7 @@ body {
     flex-grow: 0;
     width: 3em;
     padding: 2px;
+    padding-bottom: 6px;
     text-align: center;
   }
   .bid {
@@ -161,14 +200,15 @@ body {
   display: flex;
   height: 150px;
   overflow-y: auto;
+  background-color: var(--depth-bgcolor);
   .depth-window-rows {
     flex: 1;
     flex-grow: 1;
     .title {
       font-weight: bold;
     }
-    > * {
-      margin: 0;
+    * {
+      margin: 1px;
     }
     .row-bid {
       display: flex;
@@ -178,6 +218,7 @@ body {
         text-align: right;
         padding: 0;
         padding-right: 5px;
+        text-shadow: 2px 2px 3px var(--w3d-shadow);
       }
       .price-bid {
         order: 1;
@@ -198,6 +239,7 @@ body {
         text-align: left;
         padding: 0;
         padding-left: 5px;
+        text-shadow: 2px 2px 3px var(--w3d-shadow);
       }
       .price-ask {
         order: 0;
@@ -229,6 +271,7 @@ body {
   font-weight: bolder;
   padding-left: 5px;
   padding-right: 5px;
+  text-shadow: 2px 2px 5px var(--w3d-shadow);
 }
 .button:hover {
   cursor: pointer;

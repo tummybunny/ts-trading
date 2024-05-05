@@ -14,7 +14,9 @@ const DealWindow = (props: PropsWithChildren<DealWindowProp>) => {
 
     useEffect(() => {
         if (md != null) {
+            console.log({i: props.instrument, md});
             // subscribe a price stream returns unsub function ...
+            console.warn(`Subscribing ${props.instrument.ticker}`);
             const unsub = md.subscribe(props.instrument, mp => {
                 setPrice(mp)
             });

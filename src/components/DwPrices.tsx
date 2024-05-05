@@ -17,18 +17,12 @@ const repeatInterval = (num: number, delay: number, action: () => void) => {
 const DwPrices = (props: { price: MarketPrice | null }) => {
   const [baBlinks, setBaBlinks] = useState({ b: 0, a: 0 });
 
-
   useEffect(() => {
     let mid1 = lastMid;
     let mid2 = props.price?.mid;
     let ht: HitTake = mid1 && mid2 ? (mid2 > mid1 ? "take" : "hit") : null;
     lastMid = props.price?.mid;
 
-    let timer = null;
-    if (timer) {
-      //clearInterval(timer);
-      //timer = null;
-    }
     switch (ht) {
       case "hit":
         setBaBlinks({ b: 5, a: 0 });
@@ -49,6 +43,8 @@ const DwPrices = (props: { price: MarketPrice | null }) => {
       default:
         break;
     }
+
+    return () => { console.log(`Unmounted: ${props.price?.ticker} ${props.price?.timestamp}`) }
   }, [props]);
 
   return (
