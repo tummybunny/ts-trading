@@ -25,12 +25,12 @@ const DwMktDepth = (props: { price: MarketPrice | null }) => {
   const toggleOpen = () => setIsOpen((o) => !o);
 
   const chevron = isOpen ? (
-    <i className="gg-chevron-down-r" onClick={toggleOpen}/>
+    <i className="gg-chevron-down-r button" onClick={toggleOpen}/>
   ) : (
-    <i className="gg-chevron-up-r" onClick={toggleOpen}/>
+    <i className="gg-chevron-up-r button" onClick={toggleOpen}/>
   );
-  const mdepth = isOpen ? (
-    <div className="depth-window">
+  const mdepth = (
+    <div className={`depth-window ${isOpen ? "" : "invisible"}`}>
       <div className="depth-window-rows">
         <div className="row-bid">
           <div className="price-bid title">Price</div>
@@ -46,9 +46,9 @@ const DwMktDepth = (props: { price: MarketPrice | null }) => {
         {asks}
       </div>
     </div>
-  ) : null;
+  );
 
-  return <div className="depth-window-toggle">{chevron}{mdepth}</div>;
+  return <div>{chevron}{mdepth}</div>;
 };
 
 export default DwMktDepth;

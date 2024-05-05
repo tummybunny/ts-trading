@@ -87,7 +87,6 @@ body {
   }
 }
 
-
 .window {
   display: block;
   width: 17rem;
@@ -201,6 +200,8 @@ body {
   height: 150px;
   overflow-y: auto;
   background-color: var(--depth-bgcolor);
+  opacity: 1;
+  transition: height 0.2s ease-in, opacity 0.2s ease-in;
   .depth-window-rows {
     flex: 1;
     flex-grow: 1;
@@ -253,6 +254,12 @@ body {
       }
     }
   }
+}
+
+.invisible {
+  opacity: 0;
+  height: 0px;
+  transition: height 0.2s ease-in, opacity 0.2s ease-in;
 }
 
 .w3d {
