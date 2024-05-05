@@ -1,9 +1,10 @@
-import { useContext, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react";
 import MarketDataContext, { Instrument } from "../contexts/MarketDataContext";
 import DealWindow from "./DealWindow";
 
 type InstrumentAction = {
   type: "add" | "remove" | "clear" | "load";
+  ticker?: string,
   instruments?: Instrument[];
 };
 
@@ -12,17 +13,17 @@ const TradingScreen = () => {
   const selectedTicker = useRef(null);
   const md = useContext(MarketDataContext);
 
-  const tickerAction = (
+  const tickerReducer = (
     instruments: Instrument[],
     action: InstrumentAction
-  ) => {
+  ): Instrument[] => {
     let modified = instruments;
     if (action.type === "clear") {
       modified = [];
     } else if (action.type === "load" && action.instruments) {
       modified = action.instruments;
     } else {
-      const t = selectedTicker.current?.["value"];
+      const t = action.ticker || selectedTicker.current?.["value"];
       const instr = md?.instruments.find((i) => i.ticker === t);
       if (instr) {
         const exists = instruments.some((i) => i.ticker === t);
@@ -46,7 +47,7 @@ const TradingScreen = () => {
     return modified;
   };
 
-  const [instruments, dispatch] = useReducer(tickerAction, []);
+  const [instruments, dispatch] = useReducer(tickerReducer, []);
 
   useEffect(() => {
     if ((md?.instruments?.length || 0) > 0 && firstTime.current) {
@@ -69,12 +70,18 @@ const TradingScreen = () => {
     }
   }, [md]);
 
+  const closeWindow = (ticker: string): void => {
+    dispatch({ type: "remove", ticker });
+  }
+
+  const closeWindowCallback = useCallback(closeWindow, []);
+
   const children = instruments.map((i) => (
     <div
       style={{ display: "inline-block", verticalAlign: "top" }}
       key={`instr_${i.ticker}`}
     >
-      <DealWindow instrument={i} key={"Ticker_" + i.ticker} />
+      <DealWindow instrument={i} onClose={closeWindowCallback} key={"Ticker_" + i.ticker}/>
     </div>
   ));
 

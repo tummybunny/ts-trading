@@ -1,43 +1,53 @@
 import { PropsWithChildren, useContext, useEffect, useState } from "react";
-import MarketDataContext, { Instrument, MarketPrice } from "../contexts/MarketDataContext";
-import DwPrices, { HitTake } from "./DwPrices";
+import MarketDataContext, {
+  Instrument,
+  MarketPrice,
+} from "../contexts/MarketDataContext";
+import DwPrices from "./DwPrices";
 import DwActions from "./DwActions";
 import DwMktDepth from "./DwMktDepth";
 
 type DealWindowProp = {
   instrument: Instrument;
+  onClose: (ticker: string) => void;
 };
 
 const DealWindow = (props: PropsWithChildren<DealWindowProp>) => {
-    const [price, setPrice] = useState<MarketPrice | null>(null)
-    const md = useContext(MarketDataContext)
+  const [price, setPrice] = useState<MarketPrice | null>(null);
+  const md = useContext(MarketDataContext);
 
-    useEffect(() => {
-        if (md != null) {
-            console.log({i: props.instrument, md});
-            // subscribe a price stream returns unsub function ...
-            console.log(`Subscribing for ${props.instrument.ticker}`);
-            const unsub = md.subscribe(props.instrument, mp => {
-                setPrice(mp)
-            });
+  useEffect(() => {
+    if (md != null) {
+      console.log({ i: props.instrument, md });
+      // subscribe a price stream returns unsub function ...
+      console.log(`Subscribing for ${props.instrument.ticker}`);
+      const unsub = md.subscribe(props.instrument, (mp) => {
+        setPrice(mp);
+      });
 
-            // clean up during unmount:
-            return () => { 
-                console.log(`Unsubscribing from ${props.instrument.ticker}`);
-                unsub();
-            };
-        }
-    }, [props.instrument, md])
+      // clean up during unmount:
+      return () => {
+        console.log(`Unsubscribing from ${props.instrument.ticker}`);
+        unsub();
+      };
+    }
+  }, [props.instrument, md]);
 
   return (
-    <div className="window w3d" >
+    <div className="window w3d">
       <div className="window-metadata">
-        <div className="tooltip">
+        <div className="title">
+          <div className="tooltip">
             {props.instrument.ticker}
             <span className="tooltiptext">{props.instrument.name}</span>
+          </div>
         </div>
+        <div
+          className="button gg-close-r close"
+          onClick={() => props.onClose(props.instrument.ticker)}
+        ></div>
       </div>
-      <DwPrices price={price}/>
+      <DwPrices price={price} />
       <DwActions />
       <DwMktDepth price={price} />
     </div>
