@@ -1,12 +1,52 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import MarketDataContext, { Instrument } from "../contexts/MarketDataContext";
 import DealWindow from "./DealWindow";
+
+type InstrumentAction = {
+  type: "add" | "remove" | "clear" | "load";
+  instruments?: Instrument[];
+};
 
 const TradingScreen = () => {
   const firstTime = useRef(true);
   const selectedTicker = useRef(null);
-  const [instruments, setInstruments] = useState<Instrument[]>([]);
   const md = useContext(MarketDataContext);
+
+  const tickerAction = (
+    instruments: Instrument[],
+    action: InstrumentAction
+  ) => {
+    let modified = instruments;
+    if (action.type === "clear") {
+      modified = [];
+    } else if (action.type === "load" && action.instruments) {
+      modified = action.instruments;
+    } else {
+      const t = selectedTicker.current?.["value"];
+      const instr = md?.instruments.find((i) => i.ticker === t);
+      if (instr) {
+        const exists = instruments.some((i) => i.ticker === t);
+        switch (action.type) {
+          case "add":
+            if (!exists) modified = [...instruments, instr];
+            break;
+          case "remove":
+            if (exists) modified = instruments.filter((i) => i.ticker !== t);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    if (instruments !== modified) {
+      const tickersToStore = modified.map((it) => it.ticker);
+      console.log(`Saved tickers: ${JSON.stringify(tickersToStore)}`);
+      localStorage.setItem("tickers", JSON.stringify(tickersToStore));
+    }
+    return modified;
+  };
+
+  const [instruments, dispatch] = useReducer(tickerAction, []);
 
   useEffect(() => {
     if ((md?.instruments?.length || 0) > 0 && firstTime.current) {
@@ -20,40 +60,14 @@ const TradingScreen = () => {
             const i = md?.instruments?.find((i) => i.ticker === t);
             return i ? [i] : [];
           });
-          setInstruments(instrFromLocalStorage);
+          dispatch({
+            type: "load",
+            instruments: instrFromLocalStorage,
+          });
         } catch {}
       }
     }
   }, [md]);
-
-  const tickerAction = (action: "add" | "remove" | "clear") => {
-    let modified = instruments;
-    if (action === "clear") {
-      modified = []
-    } else {
-      const t = selectedTicker.current?.["value"];
-      const instr = md?.instruments.find((i) => i.ticker === t);
-      if (instr) {
-        const exists = instruments.some((i) => i.ticker === t);
-        switch (action) {
-          case "add":
-            if (!exists) modified = [...instruments, instr];
-            break;
-          case "remove":
-            if (exists) modified = instruments.filter((i) => i.ticker !== t);
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    if (instruments !== modified) {
-      const tickersToStore = modified.map(it => it.ticker);
-      console.log(`Saved tickers: ${JSON.stringify(tickersToStore)}`);
-      localStorage.setItem("tickers", JSON.stringify(tickersToStore));
-      setInstruments(modified);
-    }
-  };
 
   const children = instruments.map((i) => (
     <div
@@ -68,7 +82,11 @@ const TradingScreen = () => {
     <>
       <div className="menu">
         <div>Ticker:</div>
-        <select title="ticker" style={{ height: "1.5rem" }} ref={selectedTicker}>
+        <select
+          title="ticker"
+          style={{ height: "1.5rem" }}
+          ref={selectedTicker}
+        >
           {md?.instruments.map((i) => (
             <option value={i.ticker} key={`opt_${i.ticker}`}>
               {i.ticker}: {i.name}
@@ -77,19 +95,19 @@ const TradingScreen = () => {
         </select>
         <div
           className="button menu-button"
-          onClick={(_) => tickerAction("add")}
+          onClick={(_) => dispatch({ type: "add" })}
         >
           +
         </div>
         <div
           className="button menu-button"
-          onClick={(_) => tickerAction("remove")}
+          onClick={(_) => dispatch({ type: "remove" })}
         >
           -
         </div>
         <div
           className="button menu-button"
-          onClick={(_) => tickerAction("clear")}
+          onClick={(_) => dispatch({ type: "clear" })}
         >
           x
         </div>
