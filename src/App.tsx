@@ -3,15 +3,13 @@ import MarketDataContext, {
   Subscribe,
 } from "./contexts/MarketDataContext";
 import TradingScreen from "./components/TradingScreen";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import API from "./api/API";
 
 const NOOP: Subscribe = (i, o) => () => {};
 
 const App = () => {
   
-  const preventDoubleInitOnLoad = useRef(true);
-
   useEffect(() => {
     document.body.classList.add("theme1");
   }, []);
@@ -32,12 +30,7 @@ const App = () => {
         });
   }
 
-  useEffect(() => {
-    if (preventDoubleInitOnLoad.current) {
-      preventDoubleInitOnLoad.current = false;
-      initMarketData();
-    };
-  }, []);
+  useEffect(() => initMarketData(), []);
 
   return (
     <MarketDataContext.Provider value={md}>

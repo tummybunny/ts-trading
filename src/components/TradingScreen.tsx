@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useReducer, useRef } from "react";
 import MarketDataContext, { Instrument } from "../contexts/MarketDataContext";
 import DealWindow from "./DealWindow";
 
