@@ -451,8 +451,8 @@ const API = {
     return new Promise((resolve, reject) => {
       setInterval(() => {
         subs.forEach((s, instr) => {
-          const p = updateMockPrice(instr, prices.get(instr));
-          if (((Math.random() * 3) | 0) === 0) {
+          if (((Math.random() * 2) | 0) === 0) {
+            const p = updateMockPrice(instr, prices.get(instr));
             prices.set(instr, p);
             s.forEach((subscriber) => subscriber(p));
           }

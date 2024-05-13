@@ -1,33 +1,33 @@
 .theme1 {
   --font-size: 13px;
-  --text-color: rgb(125, 207, 255);
+  --text-color: rgb(200, 200, 200);
   --background-color: rgb(35, 35, 36);
   --meta-color: rgb(255, 255, 255);
-  --meta-bgcolor: rgb(141, 141, 141);
-  --window-color: rgb(11, 4, 115);
-  --window-color1: rgb(21, 24, 115);
-  --window-color2: rgb(98, 95, 182);
-  --bid-ask-color: rgb(179, 227, 255);
-  --bid-ask-bgcolor: rgb(37, 124, 255);
+  --meta-bgcolor: rgb(50, 50, 50);
+  --window-color: rgb(40, 40, 40);
+  --window-color1: rgb(60, 60, 60);
+  --window-color2: rgb(0, 0, 0);
+  --bid-ask-color: rgb(200, 200, 200);
+  --bid-ask-bgcolor: rgb(20, 20, 20);
   --blink-bid-ask-color: rgb(255, 255, 255);
   --blink-bid-bgcolor: rgb(0, 209, 14);
   --blink-ask-bgcolor: rgb(207, 0, 35);
-  --depth-bgcolor: rgb(0, 2, 32);
+  --depth-bgcolor: rgb(20, 20, 20);
   --depth-bid-bgcolor: rgb(10, 70, 10);
   --depth-bid-color: rgb(50, 255, 50);
   --depth-ask-bgcolor: rgb(70, 10, 10);
   --depth-ask-color: rgb(255, 97, 97);
-  --w3d-top-color: rgb(82, 115, 177);
-  --w3d-left-color: rgb(82, 104, 177);
-  --w3d-right-color: rgb(40, 59, 88);
-  --w3d-bottom-color: rgb(40, 59, 88);
+  --w3d-top-color: rgb(110, 110, 110);
+  --w3d-left-color: rgb(80, 80, 80);
+  --w3d-right-color: rgb(10, 10, 10);
+  --w3d-bottom-color: rgb(10, 10, 10);
   --w3d-shadow: rgb(0, 0, 0);
-  --button-color: white;
-  --button-bgcolor: rgb(75, 119, 160);
+  --button-color: rgb(200, 200, 200);
+  --button-bgcolor: rgb(70,70,70);
   --button-hover-color: white;
-  --button-hover-bgcolor: rgb(20, 50, 110);
+  --button-hover-bgcolor: rgb(80,80,80);
   --input-color: white;
-  --input-bgcolor: rgb(39, 61, 82);
+  --input-bgcolor: rgb(30, 30, 30);
 }
 
 /* width */
@@ -73,11 +73,11 @@ body {
   background: var(--window-color);
   background: radial-gradient(
     circle,
-    var(--window-color2) 0%,
-    var(--window-color1) 91%
+    var(--window-color1) 10%,
+    var(--window-color2) 90%
   );
   text-shadow: 2px 2px 5px var(--w3d-shadow);
-  justify-content: right;
+  justify-content: left;
   align-items: center;
 
   .menu-button {
@@ -152,7 +152,7 @@ body {
 
 .deal-window-prices {
   position: relative;
-  height: 55px;
+  height: 95px;
   display: block;
   font-weight: bolder;
   div {
@@ -164,28 +164,28 @@ body {
     text-shadow: 1px 1px 3px var(--w3d-shadow);
   }
   .bid {
-    height: 50px;
+    height: 90px;
     width: 50%;
     left: 0px;
     text-align: left;
-    padding-top: 5px;
+    padding-top: 30px;
     padding-left: 5px;
     color: var(--bid-ask-color);
     border: 2px solid;
     border-color: var(--background-color);
-    font-size: 1.3em;
+    font-size: 2em;
   }
   .ask {
-    height: 50px;
+    height: 90px;
     width: 50%;
     left: 50%;
     text-align: right;
-    padding-top: 5px;
+    padding-top: 30px;
     padding-right: 5px;
     color: var(--bid-ask-color);
     border: 2px solid;
     border-color: var(--background-color);
-    font-size: 1.3em;
+    font-size: 2em;
   }
   .mid {
     width: 100px;
