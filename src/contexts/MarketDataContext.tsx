@@ -27,9 +27,9 @@ type Subscribe = (ins: Instrument, omp: OnMarketPrice) => Unsubscribe
 type MarketData = {
     instruments: Instrument[],
     subscribe: Subscribe
-} | null;
+};
 
-const MarketDataContext = createContext<MarketData>(null)
+const MarketDataContext = createContext<MarketData | null>(null)
 
 export default MarketDataContext
 export type { Instrument, MarketDepth, MarketPrice, MarketData, Subscribe, Unsubscribe, OnMarketPrice }

@@ -9,7 +9,6 @@ import API from "./api/API";
 const NOOP: Subscribe = (i, o) => () => {};
 
 const App = () => {
-  
   useEffect(() => {
     document.body.classList.add("theme1");
   }, []);
@@ -21,14 +20,14 @@ const App = () => {
 
   const initMarketData = () => {
     API.initMarketData()
-        .then((md) => {
-          console.log("Initialized Market Data", md?.instruments);
-          setMd(md);
-        })
-        .catch((err) => {
-          console.error("Unable to initialize Market Data", err);
-        });
-  }
+      .then((md) => {
+        console.log("Initialized Market Data", md?.instruments);
+        setMd(md);
+      })
+      .catch((err) => {
+        console.error("Unable to initialize Market Data", err);
+      });
+  };
 
   useEffect(() => initMarketData(), []);
 

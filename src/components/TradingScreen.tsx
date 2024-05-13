@@ -4,7 +4,7 @@ import DealWindow from "./DealWindow";
 
 type InstrumentAction = {
   type: "add" | "remove" | "clear" | "load";
-  ticker?: string,
+  ticker?: string;
   instruments?: Instrument[];
 };
 
@@ -72,7 +72,7 @@ const TradingScreen = () => {
 
   const closeWindow = (ticker: string): void => {
     dispatch({ type: "remove", ticker });
-  }
+  };
 
   const closeWindowCallback = useCallback(closeWindow, []);
 
@@ -81,7 +81,11 @@ const TradingScreen = () => {
       style={{ display: "inline-block", verticalAlign: "top" }}
       key={`instr_${i.ticker}`}
     >
-      <DealWindow instrument={i} onClose={closeWindowCallback} key={"Ticker_" + i.ticker}/>
+      <DealWindow
+        instrument={i}
+        onClose={closeWindowCallback}
+        key={"Ticker_" + i.ticker}
+      />
     </div>
   ));
 

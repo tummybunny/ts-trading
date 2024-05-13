@@ -451,13 +451,13 @@ const API = {
     return new Promise((resolve, reject) => {
       setInterval(() => {
         subs.forEach((s, instr) => {
-          if (((Math.random() * 2) | 0) === 0) {
+          if (((Math.random() * 20) | 0) === 0) {
             const p = updateMockPrice(instr, prices.get(instr));
             prices.set(instr, p);
             s.forEach((subscriber) => subscriber(p));
           }
         });
-      }, 500);
+      }, 50);
 
       // type Subscribe = (ins: Instrument, omp: OnMarketPrice) => Unsubscribe
 
