@@ -23,9 +23,9 @@
   --w3d-bottom-color: rgb(10, 10, 10);
   --w3d-shadow: rgb(0, 0, 0);
   --button-color: rgb(200, 200, 200);
-  --button-bgcolor: rgb(70,70,70);
+  --button-bgcolor: rgb(70, 70, 70);
   --button-hover-color: white;
-  --button-hover-bgcolor: rgb(80,80,80);
+  --button-hover-bgcolor: rgb(90, 90, 90);
   --input-color: white;
   --input-bgcolor: rgb(30, 30, 30);
 }
