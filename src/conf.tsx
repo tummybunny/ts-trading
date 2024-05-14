@@ -2,8 +2,8 @@ const Configuration = {
   blinkDelayMillis: 250,
   blinkRepeats: 7,
   mock: {
-    publishIntervalMillis: 50,
-    updateProbability: 20,
+    publishIntervalMillis: 10,
+    updateProbability: 70,
     instruments: [
       { ticker: "AAPL", name: "Apple Inc. Common Stock", basePrice: 183.38 },
       {
