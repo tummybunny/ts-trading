@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { MarketPrice } from "../contexts/MarketDataContext";
+import Configuration from "../conf";
 
 type HitTake = "hit" | "take" | null;
 type BlinkRepeat = { t: NodeJS.Timeout | null; c: number };
@@ -30,8 +31,7 @@ const DwPrices = (props: { price: MarketPrice | null }) => {
 
   const restartBlink = (ctr: number) => {
     blinkRepeat.current.t && clearTimeout(blinkRepeat.current.t);
-    blinkRepeat.current.t = null;
-    blinkRepeat.current.c = ctr;
+    blinkRepeat.current = { t: null, c: ctr };
   };
 
   useEffect(() => {
@@ -42,14 +42,14 @@ const DwPrices = (props: { price: MarketPrice | null }) => {
 
     switch (ht) {
       case "hit":
-        setBaBlinks({ b: 7, a: 0 });
-        restartBlink(7);
-        repeatInterval(blinkRepeat.current, 250, blinkAction);
+        setBaBlinks({ b: Configuration.blinkRepeats, a: 0 });
+        restartBlink(Configuration.blinkRepeats);
+        repeatInterval(blinkRepeat.current, Configuration.blinkDelayMillis, blinkAction);
         break;
       case "take":
-        setBaBlinks({ b: 0, a: 7 });
-        restartBlink(7);
-        repeatInterval(blinkRepeat.current, 250, blinkAction);
+        setBaBlinks({ b: 0, a: Configuration.blinkRepeats });
+        restartBlink(Configuration.blinkRepeats);
+        repeatInterval(blinkRepeat.current, Configuration.blinkDelayMillis, blinkAction);
         break;
       default:
         break;
